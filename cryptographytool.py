@@ -3,13 +3,11 @@ from Crypto.Cipher import PKCS1_OAEP, DES
 from Crypto.Random import get_random_bytes
 import base64
 
-# ================= RSA KEY GENERATION =================
 
 def generate_keys():
     key = RSA.generate(2048)
     return key.publickey(), key
 
-# ================= DES FUNCTIONS =================
 
 def pad(text):
     while len(text) % 8 != 0:
@@ -27,7 +25,7 @@ def des_decrypt(ciphertext, key):
     decrypted = cipher.decrypt(base64.b64decode(ciphertext))
     return decrypted.strip()
 
-# ================= RSA FUNCTIONS =================
+
 
 def rsa_encrypt(data, public_key):
     cipher = PKCS1_OAEP.new(public_key)
@@ -38,8 +36,6 @@ def rsa_decrypt(ciphertext, private_key):
     cipher = PKCS1_OAEP.new(private_key)
     decrypted = cipher.decrypt(base64.b64decode(ciphertext))
     return decrypted
-
-# ================= HYBRID ENCRYPTION =================
 
 def encrypt_message(message, public_key):
 
@@ -61,7 +57,6 @@ Encrypted Key:
 Encrypted Data:
 {encrypted_message.decode()}
 
------END PGP MESSAGE-----
 """
 
     return pgp_block, encrypted_key, encrypted_message
@@ -74,8 +69,6 @@ def decrypt_message(enc_key, enc_msg, private_key):
     message = des_decrypt(enc_msg, des_key)
 
     return message.decode()
-
-# ================= MAIN PROGRAM =================
 
 print("Generating RSA Keys...")
 
